@@ -1,6 +1,7 @@
 'use strict';
 
 const Hapi = require('@hapi/hapi');
+const queries = require('./queries.js');
 
 const init = async () => {
 
