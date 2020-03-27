@@ -15,7 +15,8 @@ const init = async () => {
         path: '/',
         handler: (request, h) => {
 
-            return 'Hello World!';
+            return queries.getConcentrations()
+                .then(x => x)
         }
     });
 

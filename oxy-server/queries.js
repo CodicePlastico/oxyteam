@@ -19,7 +19,7 @@ const runQuery = async (query, params) => {
 }
 
 const insertConcentration = async (ppm) => {
-  
+
   const query = `INSERT INTO ppmconcentrations (id, date, concentration)
                   VALUES (uuid_generate_v4(), CURRENT_TIMESTAMP, $1)
                   RETURNING ppmconcentrations.*`
@@ -29,4 +29,12 @@ const insertConcentration = async (ppm) => {
   return rows
 }
 
-module.exports = { insertConcentration }
+const getConcentrations = async () => {
+  const query = `SELECT id, date, concentration FROM ppmconcentrations`
+  
+  const rows = runQuery(query)
+
+  return rows
+}
+
+module.exports = { insertConcentration, getConcentrations }
