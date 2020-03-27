@@ -18,6 +18,15 @@ const init = async () => {
         }
     }); 
 
+    server.route({
+        method: 'POST',
+        path: '/',
+        handler: (request, h) => {
+            var ppm = request.payload.ppm;
+
+        }
+    }); 
+
     await server.start();
     console.log('Server running on %s', server.info.uri);
 };
