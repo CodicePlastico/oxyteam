@@ -17,16 +17,17 @@ const init = async () => {
 
             return 'Hello World!';
         }
-    }); 
+    });
 
     server.route({
         method: 'POST',
         path: '/',
         handler: (request, h) => {
             var ppm = request.payload.ppm;
-
+            return queries.insertConcentration(ppm)
+                .then(x => x)
         }
-    }); 
+    });
 
     await server.start();
     console.log('Server running on %s', server.info.uri);

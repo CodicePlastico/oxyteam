@@ -1,22 +1,32 @@
 const { Pool } = require('pg')
-console.log(Pool);
 
-// const pool = new Pool({
-//   user: 'me',
-//   host: 'localhost',
-//   database: 'api',
-//   password: 'password',
-//   port: 5432,
-// })
+const pool = new Pool({
+  user: 'postgres',
+  password: 'postgres',
+  host: 'localhost',
+  database: 'oxydata',
+  port: 5432,
+})
 
-const runQuery = async (qry, params) => {
-    const client = await pool.connect()
-    try {
-      const { rows } = await client.query(qry, params)
-      return rows
-    } finally {
-      client.release()
-    }
+const runQuery = async (query, params) => {
+  const client = await pool.connect()
+  try {
+    const { rows } = await client.query(query, params)
+    return rows
+  } finally {
+    client.release()
   }
+}
 
-module.exports = {runQuery}
+const insertConcentration = async (ppm) => {
+  
+  const query = `INSERT INTO ppmconcentrations (id, date, concentration)
+                  VALUES (uuid_generate_v4(), CURRENT_TIMESTAMP, $1)
+                  RETURNING ppmconcentrations.*`
+
+  const rows = runQuery(query, [ppm])
+
+  return rows
+}
+
+module.exports = { insertConcentration }
