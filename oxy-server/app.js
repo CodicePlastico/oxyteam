@@ -12,17 +12,29 @@ const init = async () => {
 
     server.route({
         method: 'GET',
-        path: '/',
+        path: '/concentrations/last',
         handler: (request, h) => {
 
-            return queries.getConcentrations()
+            return queries.getLastConcentrations()
+                .then(x => x)
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/concentrations',
+        handler: (request, h) => {
+
+            const { from, to } = request.query
+
+            return queries.getConcentrations(from, to)
                 .then(x => x)
         }
     });
 
     server.route({
         method: 'POST',
-        path: '/',
+        path: '/concentrations',
         handler: (request, h) => {
             var ppm = request.payload.ppm;
             return queries.insertConcentration(ppm)

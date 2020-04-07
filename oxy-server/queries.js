@@ -29,12 +29,30 @@ const insertConcentration = async (ppm) => {
   return rows
 }
 
-const getConcentrations = async () => {
-  const query = `SELECT id, date, concentration FROM ppmconcentrations`
+const getConcentrations = async (from, to) => {
+  const query = `SELECT     id, 
+                            date, 
+                            concentration 
+                FROM        ppmconcentrations
+                WHERE       date >= $1 
+                AND         date < $2`
+  
+  const rows = runQuery(query, [from, to])
+
+  return rows
+}
+
+const getLastConcentrations = async () => {
+  const query = `SELECT    id, 
+                           date, 
+                           concentration 
+                 FROM      ppmconcentrations 
+                 ORDER BY  date desc
+                 LIMIT 1`
   
   const rows = runQuery(query)
 
   return rows
 }
 
-module.exports = { insertConcentration, getConcentrations }
+module.exports = { insertConcentration, getConcentrations, getLastConcentrations }
