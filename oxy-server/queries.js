@@ -36,7 +36,7 @@ const getConcentrations = async (from, to) => {
                 FROM        ppmconcentrations
                 WHERE       date >= $1 
                 AND         date < $2`
-  
+
   const rows = runQuery(query, [from, to])
 
   return rows
@@ -49,10 +49,29 @@ const getLastConcentrations = async () => {
                  FROM      ppmconcentrations 
                  ORDER BY  date desc
                  LIMIT 1`
-  
+
   const rows = runQuery(query)
 
   return rows
 }
 
-module.exports = { insertConcentration, getConcentrations, getLastConcentrations }
+const getDailyAvgConcentrations = async (from, to) => {
+  const query = `SELECT     date::date, 
+                            AVG(concentration) as concentrationAvg
+                 FROM       ppmconcentrations 
+                 WHERE       date >= $1 
+                 AND         date < $2
+                 GROUP BY   date::date`
+
+                 
+  const rows = runQuery(query, [from, to])
+
+  return rows
+}
+
+module.exports = {
+  insertConcentration,
+  getConcentrations,
+  getLastConcentrations,
+  getDailyAvgConcentrations
+}
