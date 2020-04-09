@@ -1,0 +1,7 @@
+{
+  "name": "escapeco2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

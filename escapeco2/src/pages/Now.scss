@@ -1,0 +1,11 @@
+.now{
+  background-image: url('/assets/bg.svg');
+  background-position: center top;
+  background-repeat: no-repeat;
+  min-height: 100%;
+
+  &__title{
+    margin: 0;
+    font-size: 40px;
+  }
+}
